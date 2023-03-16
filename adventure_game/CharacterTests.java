@@ -1,9 +1,10 @@
 package adventure_game;
 
-import static org.junit.Assert.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Assert;
+
+
 import org.junit.jupiter.api.Test;
 
 
@@ -51,4 +52,20 @@ public class CharacterTests{
             assertTrue(c.isVulnerable()); // else c will be vulnerable 
         }
     }
+
+    @Test
+    void testCastSpell(){
+        assertTrue(c.getHealth() == 100);
+        b.castSpell(c); // cast spell to make opponent by half
+        assertTrue(c.getHealth() == 50);
+    }
+
+    @Test
+    void testChargeMana(){
+        assertTrue(c.getMana() == 9);
+        c.modifyMana(-2); // decrease mana by 2 
+        assertTrue(c.getMana() == 7);
+        c.chargeMana(); // c choose charge up mana
+        assertTrue(c.getMana() == 8); // mana increase by 1
+}
 }

@@ -2,13 +2,13 @@ package adventure_game;
 
 /*
  * Project-01: Adventure Game
- * Name:
+ * Name: Juncheng Luo
  */
 
 import java.util.Scanner;
 
 import adventure_game.items.HealingPotion;
-
+import adventure_game.items.ManaPotion;
 import java.util.Random;
 
 public class Game {
@@ -35,12 +35,53 @@ public class Game {
     }
 
     public void createPlayer(){
-        /* TO-DO */
-        /* Modify this method to allow the user to create their own player */
-        /* The user will specify the player's name and description, and spend */
-        /* 20 points on health, mana, and baseDamage as they see fit. */
-        player = new Player("The Hero", 100, 9, 7);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("please enter your character's name ");
+        String name = scanner.nextLine();
+
+        int healthpoint = 0;
+        int damagepoint = 0;
+        int manapoint = 0;
+        int stats = 20;
+        
+        System.out.println("You have 20 stat points to spend on your character.");
+        while (stats > 0) {
+            System.out.printf(" You have %d stat points remaining.\n", stats);
+            System.out.println("which stat would you like to increase?");
+            System.out.println("1. Health (+10 health points per point)");
+            System.out.println("2. Damage (+1 base damage per point)");
+            System.out.println("3. Mana (+3 mana points per point)");
+            System.out.print("Enter the number of your choice: ");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    healthpoint++;
+                    stats--;
+                    System.out.printf( "Health increased to %d (+%d)\n", healthpoint*10, healthpoint);
+                    break;
+                case 2:
+                    damagepoint++;
+                    stats--;
+                    System.out.printf( "Damage increased to %d (+%d)\n", damagepoint, damagepoint);
+                    break;
+                case 3:
+                    manapoint++;
+                    stats--;
+                    System.out.printf( "Mana increased to %d (+%d)\n", manapoint*3, manapoint);
+                    break;
+            }
+        }
+
+        System.out.println("\n Character created! Here are your stats:");
+        System.out.printf("Name: %s", name);
+        System.out.printf("Health: %d", healthpoint*10);
+        System.out.printf("Damage: %d", damagepoint);
+        System.out.printf("Mana: %d",manapoint*3);
+        Player player = new Player(name, healthpoint*10, manapoint*3,damagepoint);
         player.obtain(new HealingPotion());
+        player.obtain(new ManaPotion());
+
+       
     }
 
     public void enterCombat(NPC opponent){

@@ -173,6 +173,20 @@ abstract public class Character{
             this.health = this.getMaxHealth();
         }
     }
+    /**
+     * this function modify the character's Mana and 
+     * the current mana of the character cannot be  greater than maxMana
+     * 
+     * @param modifier the amount of health is changed
+     */
+    public void modifyMana(int modifier) {
+        this.mana += modifier;
+        
+        if(this.mana > this.getMaxMana()){
+            this.mana = this.getMaxMana();
+        }
+    }
+
 
     /* CONDITIONS */
     public void setAsVulnerable(int numTurns){
@@ -260,11 +274,19 @@ abstract public class Character{
     public void setTempDamageBuff(double buff){
         this.tempDamageBuff = buff;
     }
-    
+    /**
+     * 
+     * 
+     * This factor let character obtain consumable item
+     * 
+     */
     public void obtain(Consumable item){
         items.add(item);
     }
-
+    /**
+     * this factor will use the item
+     * 
+     */
     public void useItem(Character owner, Character other){
         int i = 1;
         System.out.printf("  Do you want to use:\n");
@@ -277,8 +299,40 @@ abstract public class Character{
         items.get(choice-1).consume(owner);
         items.remove(choice-1);
     }
-
+    /**
+     * 
+     * if player have item then return is not empty
+     * 
+     */
     public boolean hasItems(){
         return !items.isEmpty();
     }
+    /**
+     * if player choose cast a spell
+     * 
+     * This factor will decrease the oppenent's health by half
+     * 
+     */
+    public void castSpell(Character other){
+        if(other.isInvincible()){
+            System.out.printf("%S is unable to cast the spell to %S!\n", 
+                                this.getName(), 
+                                other.getName());
+            other.decreaseTurnsInvincible();
+            return;
+        }
+        
+        other.modifyHealth(-(other.getHealth()/2));
+        }
+
+    /**
+     * if player choose charge up mana 
+     * 
+     * This factor will increase the mana of character by 1 
+     * 
+     */
+    public void chargeMana(){
+        this.modifyMana(1);
+    }
 }
+
