@@ -2,7 +2,6 @@ package adventure_game;
 import java.util.ArrayList;
 
 import adventure_game.items.Consumable;
-
 abstract public class Character{
     private int maxHealth;
     private int health;
@@ -13,6 +12,9 @@ abstract public class Character{
     private int baseDamage;
 
     private String name;
+    private int exp;
+    private int maxExp;
+    private int level;
 
     private ArrayList<Consumable> items;
 
@@ -24,7 +26,7 @@ abstract public class Character{
     // E.g, if 2.0, the next attack will do double damage
     private double tempDamageBuff;
 
-    public Character(String name, int health, int mana, int damage){
+    public Character(String name, int health, int mana, int damage, int level, int exp){
         this.name = name;
         this.maxHealth = health;
         this.health = health;
@@ -32,6 +34,10 @@ abstract public class Character{
         this.mana = mana;
         this.baseDamage = damage;
         this.tempDamageBuff = 1.0;
+        this.level = level;
+        this.exp = exp;
+        this.maxExp = 10;
+
         items = new ArrayList<Consumable>();
     }
 
@@ -101,7 +107,12 @@ abstract public class Character{
     public boolean isAlive(){
         return this.health > 0;
     }
-
+    public int getExp(){
+        return this.exp;
+    }
+    public int getLevel(){
+        return this.level;
+    }
     abstract void takeTurn(Character other);
     /**
      * when the character choose to attack another character he can do 0.8-1.2 times his base damage to the chosen character
@@ -333,6 +344,67 @@ abstract public class Character{
      */
     public void chargeMana(){
         this.modifyMana(1);
+    }
+    /**
+     * if player can level up 
+     * 
+     * This factor will boost player's health and mana back up to max
+     * 
+     */
+    public void levelUp(){
+       this.exp = 0;       
+       this.health = maxHealth;
+       this.mana = maxMana;
+       this.level = this.level + 1;
+    }
+    /**
+     * if player's exp > max exp
+     * 
+     * return can level up
+     * 
+     */
+    public boolean canlevelup(){
+        return this.exp > this.maxExp;
+    }
+    /**
+     * 
+     * This factor will modify player's exp
+     * 
+     * 
+     */
+    public void modifyExp(int modifier) {
+        this.exp += modifier;
+        if(this.exp > this.getMaxHealth()){
+            this.exp = this.getMaxHealth();
+        }
+    }
+    
+/**
+     * 
+     * This factor will modify player's maxhealth
+     * 
+     * 
+     */
+    public void modifyMaxHealth(int modifier) {
+        this.maxHealth += modifier;
+    }
+    /**
+     * 
+     * This factor will modify player's maxMana
+     * 
+     * 
+     */
+    public void modifyMaxMana(int modifier) {
+        this.maxMana += modifier;
+    }
+    /**
+     * 
+     * This factor will modify player's basedamage
+     * 
+     * 
+     */
+    public void modifyBaseDamage(int modifier) {
+        this.baseDamage += modifier;
     }
 }
 

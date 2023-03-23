@@ -17,8 +17,8 @@ public class CharacterTests{
     private Character b;
     @BeforeEach
     void setup(){
-        c = new Player("Hero", 100, 9, 7);
-        b = new Player("Peter", 50, 9, 12);
+        c = new Player("Hero", 100, 9, 7,0 ,0);
+        b = new Player("Peter", 50, 9, 12,0 ,0 );
     }
 
     @Test
@@ -68,4 +68,37 @@ public class CharacterTests{
         c.chargeMana(); // c choose charge up mana
         assertTrue(c.getMana() == 8); // mana increase by 1
 }
+    @Test
+    void testLevelUp(){
+        assertTrue(c.getLevel() == 0);
+        assertTrue(c.getMana() == 9);
+        assertTrue(c.getHealth() == 100);
+        c.modifyHealth(-10);
+        assertTrue(c.getHealth() == 90);
+        c.modifyMana(-2);
+        assertTrue(c.getMana() == 7);
+        c.levelUp();
+        assertTrue(c.getLevel() == 1);
+        assertTrue(c.getMana() == 9);
+        assertTrue(c.getHealth() == 100);
+}
+    @Test
+    void testModifyMaxHealth(){
+        assertTrue(c.getMaxHealth() == 100);
+        c.modifyMaxHealth(10);
+        assertTrue(c.getMaxHealth() == 110);
+    
+}
+    @Test
+        void testModifyMaxMana(){
+            assertTrue(c.getMaxMana() == 9);
+            c.modifyMaxMana(10);
+            assertTrue(c.getMaxMana() == 19);
+}
+    @Test
+    void testModifyBaseDamage(){
+        assertTrue(c.getBaseDamage() == 7);
+        c.modifyBaseDamage(10);
+        assertTrue(c.getBaseDamage() == 17);
+    }
 }

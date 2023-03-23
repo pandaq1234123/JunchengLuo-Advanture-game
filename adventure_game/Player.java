@@ -1,11 +1,46 @@
 package adventure_game;
+import java.util.Scanner;
 public class Player extends Character{
-    public Player(String name, int health, int mana, int baseDamage){
-        super(name, health, mana, baseDamage);
+    public Player(String name, int health, int mana, int baseDamage, int level, int exp){
+        super(name, health, mana, baseDamage, level, exp);
     }
 
     @Override
     public void takeTurn(Character other){
+        if(this.canlevelup()){
+            this.levelUp();
+            Scanner scanner = new Scanner(System.in);
+            int stats = 1;
+            System.out.println("You have 1 stat points to spend on your character.");
+            while (stats > 0) {
+                System.out.printf(" You have %d stat points remaining.\n", stats);
+                System.out.println("which stat would you like to increase?");
+                System.out.println("1. Health (+10 health points per point)");
+                System.out.println("2. Damage (+1 base damage per point)");
+                System.out.println("3. Mana (+3 mana points per point)");
+                System.out.print("Enter the number of your choice: ");
+                int choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        this.modifyMaxHealth(10);
+                        stats--;
+        
+                        break;
+                    case 2:
+                        this.modifyBaseDamage(1);
+                        stats--;
+                        
+                        break;
+                    case 3:
+                        this.modifyMaxMana(3);
+                        stats--;
+            
+                        break;
+            }
+        }
+            
+         
+        }
         if(this.isStunned()){
             this.decreaseTurnsStunned();
             System.out.printf("%S is unable to take any actions this turn!", this.getName());

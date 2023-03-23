@@ -23,7 +23,7 @@ public class Game {
         game.createPlayer();
         System.out.println(game.player.toString());
 
-        NPC opponent = new NPC("Geoff", 200, 0, 10);
+        NPC opponent = new NPC("Geoff", 200, 0, 10, 0, 0);
         System.out.println(opponent.toString());
         game.enterCombat(opponent);
 
@@ -43,7 +43,8 @@ public class Game {
         int damagepoint = 0;
         int manapoint = 0;
         int stats = 20;
-        
+        int level = 0;
+        int exp = 0 ;
         System.out.println("You have 20 stat points to spend on your character.");
         while (stats > 0) {
             System.out.printf(" You have %d stat points remaining.\n", stats);
@@ -57,17 +58,17 @@ public class Game {
                 case 1:
                     healthpoint++;
                     stats--;
-                    System.out.printf( "Health increased to %d (+%d)\n", healthpoint*10, healthpoint);
+                    System.out.printf( "Health increased to %d\n", healthpoint*10);
                     break;
                 case 2:
                     damagepoint++;
                     stats--;
-                    System.out.printf( "Damage increased to %d (+%d)\n", damagepoint, damagepoint);
+                    System.out.printf( "Damage increased to %d\n", damagepoint);
                     break;
                 case 3:
                     manapoint++;
                     stats--;
-                    System.out.printf( "Mana increased to %d (+%d)\n", manapoint*3, manapoint);
+                    System.out.printf( "Mana increased to %d\n", manapoint*3);
                     break;
             }
         }
@@ -77,7 +78,7 @@ public class Game {
         System.out.printf("Health: %d", healthpoint*10);
         System.out.printf("Damage: %d", damagepoint);
         System.out.printf("Mana: %d",manapoint*3);
-        Player player = new Player(name, healthpoint*10, manapoint*3,damagepoint);
+        Player player = new Player(name, healthpoint*10, manapoint*3,damagepoint,level,exp);
         player.obtain(new HealingPotion());
         player.obtain(new ManaPotion());
 

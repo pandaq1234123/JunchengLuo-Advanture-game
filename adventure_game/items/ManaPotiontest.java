@@ -12,7 +12,7 @@ public class ManaPotiontest {
     @BeforeEach
     void setup(){
         // TO-DO 
-        c = new Player("Hero", 100, 9, 7);
+        c = new Player("Hero", 100, 9, 7, 0, 0);
         // create a new player c
 
     }
